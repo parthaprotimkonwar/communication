@@ -1,0 +1,23 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page - we use the @controllers syntax here so that the router knows we are referring to a class. In turn it
+# will call on the GlobalSettings.getController method to resolve the actual controller instance.
+
+GET     /									@com.frugalbin.communication.controllers.rest.Application.index
+
+GET 	/communications/:id					@com.frugalbin.communication.controllers.rest.CommunicationController.getCommunicationDetails(id: Long)
+
+POST	/communications/send/:id			@com.frugalbin.communication.controllers.rest.CommunicationController.sendCommunication(id: Long)
+
+POST	/communications/create				@com.frugalbin.communication.controllers.rest.CommunicationController.createCommunication()
+
+# APIs/routes for INTERNAL USE
+# TODO: Need to add CORS Filter to restrict refreshDB api to be called from outside
+PUT		/communications/secrete/refreshDB	@com.frugalbin.communication.controllers.rest.CommunicationController.refreshDB()
+
+GET		/communications/template/:name		@com.frugalbin.communication.controllers.rest.CommunicationController.getTemplate(name: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
