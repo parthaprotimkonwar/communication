@@ -1,22 +1,22 @@
 package com.frugalbin.communication.services.impl;
 
 import javax.inject.Inject;
-
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import com.frugalbin.communication.models.email.EmailInfo;
 import com.frugalbin.communication.models.sms.SmsInfo;
+import com.frugalbin.communication.services.CommunicationConnectionInfoI;
 import com.frugalbin.communication.services.CommunicationInfoServiceI;
-import com.frugalbin.communication.services.CommunicationsServiceI;
+import com.frugalbin.communication.services.CommunicationServiceI;
 import com.frugalbin.communication.services.TemplateServiceI;
 
-@Configuration
-@ComponentScan({ "com.frugalbin.communication.models.sms", "com.frugalbin.communication.models.email" })
+@Named
+@Singleton
 public class ServiceFactory
 {
 	@Inject
-	private CommunicationsServiceI communicationService;
+	private CommunicationServiceI communicationService;
 
 	@Inject
 	private TemplateServiceI templateService;
@@ -27,7 +27,10 @@ public class ServiceFactory
 	@Inject
 	private CommunicationInfoServiceI<EmailInfo> emailInfoService;
 
-	public CommunicationsServiceI getCommunicationService()
+	@Inject
+	private CommunicationConnectionInfoI communicationConnectionInfoService;
+
+	public CommunicationServiceI getCommunicationService()
 	{
 		return communicationService;
 	}
@@ -45,5 +48,10 @@ public class ServiceFactory
 	public CommunicationInfoServiceI<EmailInfo> getEmailInfoService()
 	{
 		return emailInfoService;
+	}
+
+	public CommunicationConnectionInfoI getCommunicationConnectionInfoService()
+	{
+		return communicationConnectionInfoService;
 	}
 }

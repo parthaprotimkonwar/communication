@@ -9,11 +9,11 @@ import com.frugalbin.communication.models.Communication;
 import com.frugalbin.communication.models.email.EmailInfo;
 import com.frugalbin.communication.models.sms.SmsInfo;
 import com.frugalbin.communication.repositories.CommunicationRepository;
-import com.frugalbin.communication.services.CommunicationsServiceI;
+import com.frugalbin.communication.services.CommunicationServiceI;
 
 @Named
 @Singleton
-public class CommunicationsServiceImpl implements CommunicationsServiceI
+public class CommunicationServiceImpl implements CommunicationServiceI
 {
 	@Inject
 	private CommunicationRepository communicationRepository;
@@ -27,5 +27,11 @@ public class CommunicationsServiceImpl implements CommunicationsServiceI
 
 		communicationRepository.saveAndFlush(communication);
 		return communication;
+	}
+
+	@Override
+	public Communication getCommunication(Long communicationId)
+	{
+		return communicationRepository.getOne(communicationId);
 	}
 }

@@ -90,7 +90,8 @@ public class Global extends GlobalSettings
 	@ComponentScan(basePackages = { "com.frugalbin.communication.caches", "com.frugalbin.communication.controllers",
 			"com.frugalbin.communication.controllers.rest", "com.frugalbin.communication.models",
 			"com.frugalbin.communication.models.email", "com.frugalbin.communication.models.sms",
-			"com.frugalbin.communication.services", "com.frugalbin.communication.services.impl" })
+			"com.frugalbin.communication.services", "com.frugalbin.communication.services.impl",
+			"com.frugalbin.communication.integration" })
 	// , "models", "services.service", "services.serviceimpl",
 	// "controllers.bootstrap"})
 	@EnableTransactionManagement

@@ -11,16 +11,12 @@ import play.mvc.BodyParser;
 import play.mvc.Result;
 
 import com.frugalbin.communication.caches.CacheManager;
-import com.frugalbin.communication.caches.TemplateCache;
 import com.frugalbin.communication.controllers.base.BaseController;
 import com.frugalbin.communication.controllers.dto.request.CommunicationRequestDto;
+import com.frugalbin.communication.controllers.dto.request.SendCommunicationRequestDto;
 import com.frugalbin.communication.exceptions.BusinessException;
+import com.frugalbin.communication.integration.CommunicationInterface;
 import com.frugalbin.communication.models.Communication;
-import com.frugalbin.communication.models.Template;
-import com.frugalbin.communication.models.email.EmailInfo;
-import com.frugalbin.communication.models.sms.SmsInfo;
-import com.frugalbin.communication.services.impl.ServiceFactory;
-import com.frugalbin.communication.utils.Constants;
 
 @Named
 @Singleton
@@ -29,7 +25,7 @@ public class CommunicationController extends BaseController
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommunicationController.class);
 
 	@Inject
-	private ServiceFactory serviceFactory;
+	private CommunicationInterface communicationInterface;
 
 	@Inject
 	private CacheManager cacheManager;
@@ -37,74 +33,55 @@ public class CommunicationController extends BaseController
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result getCommunicationDetails(Long id)
 	{
+		/*
+		 * TODO: Complete getter method
+		 */
 		return convertObjectToJsonResponse("Communication Details: " + id);
 	}
 
-	/**
-	 * TODO : validate if the user/token is valid
-	 * 
-	 * @return
-	 */
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result sendCommunication(Long id)
 	{
+		try
+		{
+			SendCommunicationRequestDto request = convertRequestBodyToObject(request().body(),
+					SendCommunicationRequestDto.class);
+			communicationInterface.sendCommunication(request);
+		}
+		catch (BusinessException e)
+		{
+			LOGGER.error("Could not create Communication", e);
+			return convertObjectToJsonResponse("Comm creation error: " + e.getErrorMessage());
+		}
+
 		return convertObjectToJsonResponse("Communication Sent: " + id);
 	}
 
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result createCommunication()
 	{
-		CommunicationRequestDto request;
 		Communication communication;
 		try
 		{
-			request = convertRequestBodyToObject(request().body(), CommunicationRequestDto.class);
-			communication = createCommunication(request);
+			CommunicationRequestDto request = convertRequestBodyToObject(request().body(),
+					CommunicationRequestDto.class);
+			communication = communicationInterface.createCommunication(request);
 		}
 		catch (BusinessException e)
 		{
+			LOGGER.error("Could not create Communication", e);
 			return convertObjectToJsonResponse("Comm creation error: " + e.getErrorMessage());
 		}
-		return convertObjectToJsonResponse(communication);
-	}
 
-	private Communication createCommunication(CommunicationRequestDto commRequest) throws BusinessException
-	{
-		Template template = TemplateCache.getInstance().getTemplate(commRequest.getTemplateId());
-
-		if (template == null)
-		{
-			throw new BusinessException(Constants.TEMPLATE_NOT_FOUND_ERROR_CODE,
-					Constants.TEMPLATE_NOT_FOUND_ERROR_MESSAGE);
-		}
-
-		/*
-		 * TODO: move creation of smsInfo and emailInfo to separate method or class and Complete the implementation with handling 
-		 */
-		SmsInfo smsInfo = null;
-		if (template.getTemplateType().isSMSType())
-		{
-			smsInfo = new SmsInfo();
-			smsInfo.setTemplate(template);
-
-			smsInfo = serviceFactory.getSmsInfoService().insertInfo(smsInfo);
-		}
-
-		EmailInfo emailInfo = null;
-		if (template.getTemplateType().isEmailType())
-		{
-			emailInfo = new EmailInfo();
-			emailInfo.setTemplate(template);
-
-			emailInfo = serviceFactory.getEmailInfoService().insertInfo(emailInfo);
-		}
-
-		return serviceFactory.getCommunicationService().insertCommunication(smsInfo, emailInfo);
+		return convertObjectToJsonResponse(communication.getCommunicationId());
 	}
 
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result refreshDB()
 	{
+		/*
+		 * TODO: handle any exceptions 
+		 */
 		LOGGER.info("Refresh Cache Service has been called");
 		cacheManager.refreshCaches();
 		return convertObjectToJsonResponse(Boolean.TRUE);

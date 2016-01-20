@@ -1,6 +1,6 @@
 package com.frugalbin.communication.models.helpers;
 
-public enum TemplateType
+public enum CommunicationType
 {
 	EMAIL,
 	SMS,

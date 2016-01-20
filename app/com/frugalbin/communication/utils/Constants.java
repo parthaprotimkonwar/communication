@@ -10,6 +10,7 @@ public interface Constants
 	static final String EMAIL_INFO_TABLE = "EMAIL_INFO";
 	static final String TEMPLATE_TABLE = "TEMPLATE";
 	static final String COMMUNICATION_TABLE = "COMMUNICATION";
+	static final String COMMUNICATION_CONNECTION_TABLE = "COMMUNICATION_CONNECTION";
 
 	// Table Columns
 	// Columns: Common
@@ -31,6 +32,13 @@ public interface Constants
 	// Columns: Communication Table
 	static final String SMS_INFO_ID_COLUMN = "SMS_INFO_ID";
 	static final String EMAIL_INFO_ID_COLUMN = "EMAIL_INFO_ID";
+
+	// Columns: CommunicationConnectionInfo Table
+	static final String CONNECTION_URL_COLUMN = "CONNECTION_URL";
+	static final String USER_NAME_COLUMN = "USER_NAME";
+	static final String PASSWORD_COLUMN = "PASSWORD";
+	static final String KEY_VALUE_PAIRS_COLUMN = "KEY_VALUE_PAIRS";
+	static final String COMMUNICATION_TYPE_COLUMN = "COMMUNICATION_TYPE";
 
 	// ERROR Codes
 	static final int TEMPLATE_NOT_FOUND_ERROR_CODE = 1001;

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.frugalbin.communication.models.Template;
-import com.frugalbin.communication.models.helpers.TemplateType;
+import com.frugalbin.communication.models.helpers.CommunicationType;
 import com.frugalbin.communication.services.impl.ServiceFactory;
 
 public class TemplateCache extends AbstractCache
@@ -45,7 +45,7 @@ public class TemplateCache extends AbstractCache
 		template.setTemplateId(1L);
 		template.setTemplateContent("Test Content %NAME%");
 		template.setTemplateName("TEST");
-		template.setTemplateType(TemplateType.EMAIL_SMS);
+		template.setTemplateType(CommunicationType.EMAIL_SMS);
 		template.setKeys("%NAME%");
 		this.serviceFactory.getTemplateService().insertTemplate(template);
 	}

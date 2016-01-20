@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.frugalbin.communication.models.helpers.TemplateType;
+import com.frugalbin.communication.models.helpers.CommunicationType;
 import com.frugalbin.communication.utils.Constants;
 
 @Entity
@@ -29,7 +29,7 @@ public class Template
 
 	@Column(name = Constants.TEMPLATE_TYPE_COLUMN)
 	@Enumerated(EnumType.STRING)
-	private TemplateType templateType;
+	private CommunicationType templateType;
 
 	/*
 	 * TODO: need to convert string to list 											
@@ -53,7 +53,7 @@ public class Template
 		return templateName;
 	}
 
-	public TemplateType getTemplateType()
+	public CommunicationType getTemplateType()
 	{
 		return templateType;
 	}
@@ -78,7 +78,7 @@ public class Template
 		this.templateName = templateName;
 	}
 
-	public void setTemplateType(TemplateType templateType)
+	public void setTemplateType(CommunicationType templateType)
 	{
 		this.templateType = templateType;
 	}
