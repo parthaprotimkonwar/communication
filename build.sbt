@@ -1,4 +1,4 @@
-name := "authorization"
+name := "Communication"
 
 version := "1.0-SNAPSHOT"
 
