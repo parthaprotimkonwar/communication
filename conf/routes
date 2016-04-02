@@ -9,7 +9,7 @@ GET     /									@com.frugalbin.communication.controllers.rest.Application.inde
 
 GET 	/communications/:id					@com.frugalbin.communication.controllers.rest.CommunicationController.getCommunicationDetails(id: Long)
 
-POST	/communications/send/:id			@com.frugalbin.communication.controllers.rest.CommunicationController.sendCommunication(id: Long)
+POST	/communications/send				@com.frugalbin.communication.controllers.rest.CommunicationController.sendCommunication()
 
 POST	/communications/create				@com.frugalbin.communication.controllers.rest.CommunicationController.createCommunication()
 

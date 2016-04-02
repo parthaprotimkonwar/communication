@@ -6,7 +6,7 @@ import javax.inject.Singleton;
 
 import com.frugalbin.communication.models.email.EmailInfo;
 import com.frugalbin.communication.models.sms.SmsInfo;
-import com.frugalbin.communication.services.CommunicationConnectionInfoI;
+import com.frugalbin.communication.services.CommunicationConnectionInfoServiceI;
 import com.frugalbin.communication.services.CommunicationInfoServiceI;
 import com.frugalbin.communication.services.CommunicationServiceI;
 import com.frugalbin.communication.services.TemplateServiceI;
@@ -28,7 +28,7 @@ public class ServiceFactory
 	private CommunicationInfoServiceI<EmailInfo> emailInfoService;
 
 	@Inject
-	private CommunicationConnectionInfoI communicationConnectionInfoService;
+	private CommunicationConnectionInfoServiceI communicationConnectionInfoService;
 
 	public CommunicationServiceI getCommunicationService()
 	{
@@ -50,7 +50,7 @@ public class ServiceFactory
 		return emailInfoService;
 	}
 
-	public CommunicationConnectionInfoI getCommunicationConnectionInfoService()
+	public CommunicationConnectionInfoServiceI getCommunicationConnectionInfoService()
 	{
 		return communicationConnectionInfoService;
 	}

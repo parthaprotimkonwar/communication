@@ -40,7 +40,7 @@ public class CommunicationController extends BaseController
 	}
 
 	@BodyParser.Of(BodyParser.Json.class)
-	public Result sendCommunication(Long id)
+	public Result sendCommunication() throws com.frugalbin.common.exceptions.BusinessException
 	{
 		try
 		{
@@ -54,7 +54,7 @@ public class CommunicationController extends BaseController
 			return convertObjectToJsonResponse("Comm creation error: " + e.getErrorMessage());
 		}
 
-		return convertObjectToJsonResponse("Communication Sent: " + id);
+		return convertObjectToJsonResponse("Communication Sent: ");
 	}
 
 	@BodyParser.Of(BodyParser.Json.class)

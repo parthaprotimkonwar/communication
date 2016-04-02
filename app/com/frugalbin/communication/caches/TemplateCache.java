@@ -55,7 +55,10 @@ public class TemplateCache extends AbstractCache
 	{
 		List<Template> templateList = serviceFactory.getTemplateService().getTemplateList();
 
-		templateMap = templateList.stream().collect(Collectors.toMap(Template::getTemplateId, (c) -> c));
+		for (Template template : templateList)
+		{
+			templateMap.put(template.getTemplateId(), template);
+		}
 	}
 
 	public Template getTemplate(Long templateId)

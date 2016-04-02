@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.frugalbin.communication.models.helpers.CommunicationType;
+import com.frugalbin.communication.utils.CommConnStatus;
 import com.frugalbin.communication.utils.Constants;
 
 @Entity
@@ -24,8 +25,11 @@ public class CommunicationConnectionInfo
 	@Column(name = Constants.ID_COLUMN)
 	private Long id;
 
-	@Column(name = Constants.CONNECTION_URL_COLUMN)
-	private String connectionUrl;
+	@Column(name = Constants.HOST_COLUMN)
+	private String host;
+	
+	@Column(name = Constants.PORT_COLUMN)
+	private String port;
 
 	@Column(name = Constants.USER_NAME_COLUMN)
 	private String userName;
@@ -39,6 +43,10 @@ public class CommunicationConnectionInfo
 	@Column(name = Constants.COMMUNICATION_TYPE_COLUMN)
 	@Enumerated(EnumType.STRING)
 	private CommunicationType communicationType;
+	
+	@Column(name = Constants.STATUS_COLUMN)
+	@Enumerated(EnumType.STRING)
+	private CommConnStatus status;
 
 	public Long getCommunicationConnectionId()
 	{
@@ -47,7 +55,12 @@ public class CommunicationConnectionInfo
 
 	public String getConnectionUrl()
 	{
-		return connectionUrl;
+		return host;
+	}
+	
+	public String getPort()
+	{
+		return port;
 	}
 
 	public String getUserName()
@@ -68,5 +81,50 @@ public class CommunicationConnectionInfo
 	public CommunicationType getCommunicationType()
 	{
 		return communicationType;
+	}
+
+	public CommConnStatus getStatus()
+	{
+		return status;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public void setHost(String host)
+	{
+		this.host = host;
+	}
+
+	public void setPort(String port)
+	{
+		this.port = port;
+	}
+
+	public void setUserName(String userName)
+	{
+		this.userName = userName;
+	}
+
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
+	public void setKeyValuePairs(String keyValuePairs)
+	{
+		this.keyValuePairs = keyValuePairs;
+	}
+
+	public void setCommunicationType(CommunicationType communicationType)
+	{
+		this.communicationType = communicationType;
+	}
+
+	public void setStatus(CommConnStatus status)
+	{
+		this.status = status;
 	}
 }

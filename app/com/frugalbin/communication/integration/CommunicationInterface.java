@@ -12,8 +12,11 @@ import com.frugalbin.communication.models.Communication;
 import com.frugalbin.communication.models.Template;
 import com.frugalbin.communication.models.email.EmailInfo;
 import com.frugalbin.communication.models.sms.SmsInfo;
+import com.frugalbin.communication.sender.EmailSender;
+import com.frugalbin.communication.sender.SMSSender;
 import com.frugalbin.communication.services.impl.ServiceFactory;
 import com.frugalbin.communication.utils.Constants;
+import com.frugalbin.communication.utils.Util;
 
 @Named
 @Singleton
@@ -73,14 +76,24 @@ public class CommunicationInterface
 		return serviceFactory.getSmsInfoService().insertInfo(smsInfo);
 	}
 
-	public void sendCommunication(SendCommunicationRequestDto request)
+	public void sendCommunication(SendCommunicationRequestDto request) throws com.frugalbin.common.exceptions.BusinessException, BusinessException
 	{
 		for (Long communicationId : request.getCommunicationIds())
 		{
 			Communication communication = serviceFactory.getCommunicationService().getCommunication(communicationId);
-			/*
-			 * TODO: implement reamaining
-			 */
+
+			if (communication.getEmailInfo() != null)
+			{
+				EmailSender.getInstance().sendEmail(communication.getEmailInfo().getTo(),
+						communication.getEmailInfo().getFrom(), communication.getEmailInfo().getSubject(),
+						Util.getMessageContent(communication.getEmailInfo()));
+			}
+			
+			if (communication.getSmsInfo() != null)
+			{
+				SMSSender.getInstance().sendSms(communication.getSmsInfo().getTo(),
+						Util.getMessageContent(communication.getSmsInfo()));
+			}
 		}
 	}
 }

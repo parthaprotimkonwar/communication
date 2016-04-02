@@ -1,25 +1,38 @@
 package com.frugalbin.communication.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.frugalbin.communication.models.CommunicationInfo;
 import com.frugalbin.communication.models.Template;
 
 public class Util
 {
-	public static String getMessageContent(Template template, String keyValues)
+	public static String getMessageContent(CommunicationInfo commInfo)
 	{
-		String messageContent = template.getTemplateContent();
-		String[] keyList = template.getKeys().split(",");
-		String[] keyValueList = keyValues.split(",");
+		String templateMsg = commInfo.getTemplate().getTemplateContent();
+		Map<String, String> keyValueMap = getKeyValueMap(commInfo.getKeyValues());
 
-		if (keyList.length != keyValueList.length)
+		String msg = null;
+		for (Entry<String, String> keyValueEntry : keyValueMap.entrySet())
 		{
-			// Throw Exception
+			msg = templateMsg.replace(keyValueEntry.getKey(), keyValueEntry.getValue());
 		}
 
-		for (int i = 0; i < keyValues.length(); i++)
-		{
-			messageContent.replace(keyList[i], keyValueList[i]);
-		}
+		return msg;
 
-		return messageContent;
+	}
+
+	public static Map<String, String> getKeyValueMap(String keyValues)
+	{
+		Map<String, String> map = new HashMap<String, String>();
+		
+		for (String keyValuePair : keyValues.split(Constants.KEY_VALUE_PAIR_SEPARATOR))
+		{
+			String[] keyValue = keyValuePair.split(Constants.KEY_VALUE_SEPARATOR);
+			map.put(keyValue[0], keyValue[1]);
+		}
+		return map;
 	}
 }

@@ -41,6 +41,12 @@ public class CommunicationInfo
 
 	@ManyToOne
 	private Template template;
+	
+	@Column(name = Constants.TO_COLUMN)
+	private String to;
+	
+	@Column(name = Constants.FROM_COLUMN)
+	private String from;
 
 	public CommunicationStatus getStatus()
 	{
@@ -90,5 +96,25 @@ public class CommunicationInfo
 	public void setTemplate(Template template)
 	{
 		this.template = template;
+	}
+
+	public String getTo()
+	{
+		return to;
+	}
+
+	public void setTo(String to)
+	{
+		this.to = to;
+	}
+
+	public String getFrom()
+	{
+		return from;
+	}
+
+	public void setFrom(String from)
+	{
+		this.from = from;
 	}
 }

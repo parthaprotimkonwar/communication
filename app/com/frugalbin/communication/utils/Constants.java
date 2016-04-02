@@ -15,13 +15,16 @@ public interface Constants
 	// Table Columns
 	// Columns: Common
 	static final String ID_COLUMN = "ID";
+	static final String STATUS_COLUMN = "STATUS";
 
 	// Columns: SMS_INFO and EMAIL_INFO table
-	static final String STATUS_COLUMN = "STATUS";
 	static final String RETRY_COUNT_COLUMN = "RETRY_COUNT";
 	static final String SEND_TIME_COLUMN = "SEND_TIME";
 	static final String TEMPLATE_ID_COLUMN = "TEMPLATE_ID";
 	static final String KEY_VALUES_COLUMN = "KEY_VALUES";
+	static final String TO_COLUMN = "TO";
+	static final String FROM_COLUMN = "FROM";
+	static final String SUBJECT_COLUMN = "SUBJECT";
 
 	// Columns: Template table
 	static final String TEMPLATE_CONTENT_COLUMN = "TEMPLATE_CONTENT";
@@ -34,7 +37,8 @@ public interface Constants
 	static final String EMAIL_INFO_ID_COLUMN = "EMAIL_INFO_ID";
 
 	// Columns: CommunicationConnectionInfo Table
-	static final String CONNECTION_URL_COLUMN = "CONNECTION_URL";
+	static final String HOST_COLUMN = "HOST";
+	static final String PORT_COLUMN = "PORT";
 	static final String USER_NAME_COLUMN = "USER_NAME";
 	static final String PASSWORD_COLUMN = "PASSWORD";
 	static final String KEY_VALUE_PAIRS_COLUMN = "KEY_VALUE_PAIRS";
@@ -45,5 +49,13 @@ public interface Constants
 
 	// ERROR Messages
 	static final String TEMPLATE_NOT_FOUND_ERROR_MESSAGE = "Template with Id {} not found";
+
+	public static final String SMS_PARAMS_ARG = "params";
+
+	public static final String KEY_VALUE_PAIR_SEPARATOR = ";";
+
+	public static final String KEY_VALUE_SEPARATOR = "=";
+
+	public static final String PARAM_SEPARATOR = ",";
 
 }
