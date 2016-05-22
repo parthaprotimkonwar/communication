@@ -1,5 +1,7 @@
 package com.frugalbin.communication.integration;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -11,6 +13,7 @@ import com.frugalbin.communication.exceptions.BusinessException;
 import com.frugalbin.communication.models.Communication;
 import com.frugalbin.communication.models.Template;
 import com.frugalbin.communication.models.email.EmailInfo;
+import com.frugalbin.communication.models.helpers.CommunicationStatus;
 import com.frugalbin.communication.models.sms.SmsInfo;
 import com.frugalbin.communication.sender.EmailSender;
 import com.frugalbin.communication.sender.SMSSender;
@@ -44,7 +47,7 @@ public class CommunicationInterface
 
 	private EmailInfo createEmailInfo(CommunicationRequestDto commRequest, Template template)
 	{
-		if (!template.getTemplateType().isSMSType())
+		if (!template.getTemplateType().isEmailType())
 		{
 			return null;
 		}
@@ -54,7 +57,14 @@ public class CommunicationInterface
 		 */
 		EmailInfo emailInfo = new EmailInfo();
 		emailInfo.setTemplate(template);
-		emailInfo.setKeyValues(commRequest.getKeyValues());
+		emailInfo.setKeyValues(commRequest.getTemplateKeyValues());
+		emailInfo.setFrom(commRequest.getFrom());
+		emailInfo.setTo(commRequest.getTo());
+
+		Map<String, String> commInfoKeyValues = Util.getKeyValueMap(commRequest.getCommInfoKeyValues());
+		emailInfo.setVisibleName(commInfoKeyValues.get("VisibleName"));
+		emailInfo.setSubject(commInfoKeyValues.get("Subject"));
+		emailInfo.setStatus(CommunicationStatus.CREATED);
 
 		return serviceFactory.getEmailInfoService().insertInfo(emailInfo);
 	}
@@ -71,12 +81,13 @@ public class CommunicationInterface
 		 */
 		SmsInfo smsInfo = new SmsInfo();
 		smsInfo.setTemplate(template);
-		smsInfo.setKeyValues(commRequest.getKeyValues());
+		smsInfo.setKeyValues(commRequest.getTemplateKeyValues());
 
 		return serviceFactory.getSmsInfoService().insertInfo(smsInfo);
 	}
 
-	public void sendCommunication(SendCommunicationRequestDto request) throws com.frugalbin.common.exceptions.BusinessException, BusinessException
+	public void sendCommunication(SendCommunicationRequestDto request)
+			throws com.frugalbin.common.exceptions.BusinessException, BusinessException
 	{
 		for (Long communicationId : request.getCommunicationIds())
 		{
@@ -84,11 +95,13 @@ public class CommunicationInterface
 
 			if (communication.getEmailInfo() != null)
 			{
-				EmailSender.getInstance().sendEmail(communication.getEmailInfo().getTo(),
-						communication.getEmailInfo().getFrom(), communication.getEmailInfo().getSubject(),
-						Util.getMessageContent(communication.getEmailInfo()));
+				EmailSender.getInstance()
+						.sendEmail(communication.getEmailInfo().getTo(), communication.getEmailInfo().getFrom(),
+								communication.getEmailInfo().getVisibleName(),
+								communication.getEmailInfo().getSubject(),
+								Util.getMessageContent(communication.getEmailInfo()));
 			}
-			
+
 			if (communication.getSmsInfo() != null)
 			{
 				SMSSender.getInstance().sendSms(communication.getSmsInfo().getTo(),

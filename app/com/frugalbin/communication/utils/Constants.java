@@ -22,8 +22,8 @@ public interface Constants
 	static final String SEND_TIME_COLUMN = "SEND_TIME";
 	static final String TEMPLATE_ID_COLUMN = "TEMPLATE_ID";
 	static final String KEY_VALUES_COLUMN = "KEY_VALUES";
-	static final String TO_COLUMN = "TO";
-	static final String FROM_COLUMN = "FROM";
+	static final String TO_COLUMN = "TO_VALUE";
+	static final String FROM_COLUMN = "FROM_VALUE";
 	static final String SUBJECT_COLUMN = "SUBJECT";
 
 	// Columns: Template table
@@ -43,6 +43,7 @@ public interface Constants
 	static final String PASSWORD_COLUMN = "PASSWORD";
 	static final String KEY_VALUE_PAIRS_COLUMN = "KEY_VALUE_PAIRS";
 	static final String COMMUNICATION_TYPE_COLUMN = "COMMUNICATION_TYPE";
+	static final String VISBLE_NAME_COLUMN = "VISIBLE_NAME";
 
 	// ERROR Codes
 	static final int TEMPLATE_NOT_FOUND_ERROR_CODE = 1001;

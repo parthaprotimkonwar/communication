@@ -60,11 +60,11 @@ public class CommunicationConnectionCache extends AbstractCache
 		serviceFactory.getCommunicationConnectionInfoService().insertCommConnectionInfo(connInfo);
 		
 		connInfo = new CommunicationConnectionInfo();
-		connInfo.setHost("smtp.gmail.com");
-		connInfo.setPort("587");
+		connInfo.setHost("email-smtp.us-west-2.amazonaws.com");
+		connInfo.setPort("25");
 		connInfo.setCommunicationType(CommunicationType.EMAIL);
-		connInfo.setUserName("krish000back@gmail.com");
-		connInfo.setPassword("");
+		connInfo.setUserName("AKIAIPXWNP7VW2YS2PQA");
+		connInfo.setPassword("AuyhHrTiNpzXPXISJQRyAOR3kCrff7oIZ5DsYEuyfrwS");
 		connInfo.setStatus(CommConnStatus.ACTIVE);
 		serviceFactory.getCommunicationConnectionInfoService().insertCommConnectionInfo(connInfo);
 	}

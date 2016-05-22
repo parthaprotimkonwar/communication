@@ -28,6 +28,7 @@ public class CacheManager
 	public CacheManager()
 	{
 		cacheList.add(TemplateCache.getInstance());
+		cacheList.add(CommunicationConnectionCache.getInstance());
 	}
 
 	@PostConstruct

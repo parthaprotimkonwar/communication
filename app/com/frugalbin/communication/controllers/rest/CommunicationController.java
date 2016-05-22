@@ -1,5 +1,8 @@
 package com.frugalbin.communication.controllers.rest;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -10,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 
+import com.frugalbin.common.dto.response.communication.SuccessStatusResponse;
 import com.frugalbin.communication.caches.CacheManager;
+import com.frugalbin.communication.caches.TemplateCache;
 import com.frugalbin.communication.controllers.base.BaseController;
 import com.frugalbin.communication.controllers.dto.request.CommunicationRequestDto;
 import com.frugalbin.communication.controllers.dto.request.SendCommunicationRequestDto;
@@ -42,19 +47,22 @@ public class CommunicationController extends BaseController
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result sendCommunication() throws com.frugalbin.common.exceptions.BusinessException
 	{
+		SuccessStatusResponse response = new SuccessStatusResponse();
 		try
 		{
 			SendCommunicationRequestDto request = convertRequestBodyToObject(request().body(),
 					SendCommunicationRequestDto.class);
 			communicationInterface.sendCommunication(request);
+			response.setIsSuccess(true);
 		}
 		catch (BusinessException e)
 		{
 			LOGGER.error("Could not create Communication", e);
-			return convertObjectToJsonResponse("Comm creation error: " + e.getErrorMessage());
+			response.setIsSuccess(false);
+			response.setFailureMsg("Comm creation error: " + e.getErrorMessage());
 		}
 
-		return convertObjectToJsonResponse("Communication Sent: ");
+		return convertObjectToJsonResponse(response);
 	}
 
 	@BodyParser.Of(BodyParser.Json.class)
@@ -73,7 +81,9 @@ public class CommunicationController extends BaseController
 			return convertObjectToJsonResponse("Comm creation error: " + e.getErrorMessage());
 		}
 
-		return convertObjectToJsonResponse(communication.getCommunicationId());
+		Map<String, Long> response = new LinkedHashMap<String, Long>();
+		response.put("communicationId", communication.getCommunicationId());
+		return convertObjectToJsonResponse(response);
 	}
 
 	@BodyParser.Of(BodyParser.Json.class)
@@ -90,6 +100,8 @@ public class CommunicationController extends BaseController
 	@BodyParser.Of(BodyParser.Json.class)
 	public Result getTemplate(String templateName)
 	{
-		return convertObjectToJsonResponse("template is there");
+		Map<String, Long> response = new LinkedHashMap<String, Long>();
+		response.put("templateId", TemplateCache.getInstance().getTemplate(templateName).getTemplateId());
+		return convertObjectToJsonResponse(response);
 	}
 }

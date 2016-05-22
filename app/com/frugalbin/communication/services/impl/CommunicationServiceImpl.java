@@ -32,6 +32,6 @@ public class CommunicationServiceImpl implements CommunicationServiceI
 	@Override
 	public Communication getCommunication(Long communicationId)
 	{
-		return communicationRepository.getOne(communicationId);
+		return communicationRepository.findOne(communicationId);
 	}
 }

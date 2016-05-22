@@ -1,5 +1,6 @@
 package com.frugalbin.communication.sender;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -59,11 +60,12 @@ public class EmailSender
 		final String password = commConnInfo.getPassword();// change accordingly
 
 		// Get the session object
-		Properties props = new Properties();
+		Properties props = System.getProperties();
 		// props.put("mail.smtp.host", host);
 		// props.put("mail.smtp.auth", "true");
 
 		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.starttls.required", "true");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", port);
@@ -76,17 +78,23 @@ public class EmailSender
 			}
 		});
 	}
+	
+	public void sendEmail(String to, String from, String visibleName, String subject, String messageBody)
+	{
+		sendEmail(to, from, visibleName, subject, messageBody, false);
+	}
 
-	public void sendEmail(String to, String from, String subject, String messageBody)
+	public void sendEmail(String to, String from, String visibleName, String subject, String messageBody, Boolean isHtml)
 	{
 		// Compose the message
 		try
 		{
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(from));
+			message.setFrom(new InternetAddress(from, visibleName));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
 			message.setText(messageBody);
+			message.setContent(messageBody, isHtml ? "text/html" : "text/plain");
 
 			// send the message
 			Transport.send(message);
@@ -96,6 +104,11 @@ public class EmailSender
 		}
 		catch (MessagingException e)
 		{
+			e.printStackTrace();
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

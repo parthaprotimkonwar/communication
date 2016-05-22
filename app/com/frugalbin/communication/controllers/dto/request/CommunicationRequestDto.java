@@ -9,7 +9,13 @@ public class CommunicationRequestDto
 	/*
 	 * TODO: need to change to list/map instead of String
 	 */
-	private String keyValues = StringUtils.EMPTY;
+	private String templateKeyValues = StringUtils.EMPTY;
+
+	private String from = "care@frugalbin.com";
+
+	private String to;
+
+	private String commInfoKeyValues = StringUtils.EMPTY;
 
 	public Long getTemplateId()
 	{
@@ -21,14 +27,43 @@ public class CommunicationRequestDto
 		this.templateId = templateId;
 	}
 
-	public String getKeyValues()
+	public String getTemplateKeyValues()
 	{
-		return keyValues;
+		return templateKeyValues;
 	}
 
-	public void setKeyValues(String keyValues)
+	public void setTemplateKeyValues(String templateKeyValues)
 	{
-		this.keyValues = keyValues;
+		this.templateKeyValues = templateKeyValues;
 	}
 
+	public String getFrom()
+	{
+		return from;
+	}
+
+	public void setFrom(String from)
+	{
+		this.from = from;
+	}
+
+	public String getTo()
+	{
+		return to;
+	}
+
+	public void setTo(String to)
+	{
+		this.to = to;
+	}
+
+	public String getCommInfoKeyValues()
+	{
+		return commInfoKeyValues;
+	}
+
+	public void setCommInfoKeyValues(String commInfoKeyValues)
+	{
+		this.commInfoKeyValues = commInfoKeyValues;
+	}
 }

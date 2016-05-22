@@ -2,6 +2,7 @@ package com.frugalbin.communication.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,10 +22,10 @@ public class Communication
 	@Column(name = Constants.ID_COLUMN)
 	private Long communicationId;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	private SmsInfo smsInfo;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	private EmailInfo emailInfo;
 
 	public Long getCommunicationId()

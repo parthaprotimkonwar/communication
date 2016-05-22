@@ -13,7 +13,10 @@ public class EmailInfo extends CommunicationInfo
 {
 	@Column(name = Constants.SUBJECT_COLUMN)
 	private String subject;
-	
+
+	@Column(name = Constants.VISBLE_NAME_COLUMN)
+	private String visibleName;
+
 	public Long getEmailInfoId()
 	{
 		return id;
@@ -32,5 +35,15 @@ public class EmailInfo extends CommunicationInfo
 	public void setSubject(String subject)
 	{
 		this.subject = subject;
+	}
+
+	public String getVisibleName()
+	{
+		return visibleName;
+	}
+
+	public void setVisibleName(String visibleName)
+	{
+		this.visibleName = visibleName;
 	}
 }

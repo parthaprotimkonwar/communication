@@ -7,7 +7,7 @@
 
 GET     /									@com.frugalbin.communication.controllers.rest.Application.index
 
-GET 	/communications/:id					@com.frugalbin.communication.controllers.rest.CommunicationController.getCommunicationDetails(id: Long)
+GET 	/communications/getCommDetails		@com.frugalbin.communication.controllers.rest.CommunicationController.getCommunicationDetails(id: Long)
 
 POST	/communications/send				@com.frugalbin.communication.controllers.rest.CommunicationController.sendCommunication()
 
@@ -17,7 +17,7 @@ POST	/communications/create				@com.frugalbin.communication.controllers.rest.Com
 # TODO: Need to add CORS Filter to restrict refreshDB api to be called from outside
 PUT		/communications/secrete/refreshDB	@com.frugalbin.communication.controllers.rest.CommunicationController.refreshDB()
 
-GET		/communications/template/:name		@com.frugalbin.communication.controllers.rest.CommunicationController.getTemplate(name: String)
+GET		/communications/template		@com.frugalbin.communication.controllers.rest.CommunicationController.getTemplate(templateName)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
